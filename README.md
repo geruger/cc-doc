@@ -1,22 +1,5 @@
 # 技术文档
 
-1. html —— `HTML5`&`CSS3` 技术文档
-2. javascript —— `JavaScript` 技术文档
-3. React —— `React` 技术文档
-  - React 介绍
-  - React 基础
-  - React 项目详情
-  - React Redux 运用
-  - React Antd （ antd 须注意的问题）
-  - React 其他工具（项目用到的工具）
-  - React 开发问题 （开发采坑记录）
-
-4. tool —— 常用工具文档
-
-
-
-
-
 ## 开始一个新文库的步骤
 
 1. ##### 下载 Github 出品的开源文本编辑器 [Visual Studio Code](https://code.visualstudio.com/Download)，并安装  
