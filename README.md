@@ -18,7 +18,7 @@
     - **logo**，logo 的 url，设置但为空或不设置将显示默认 logo
     - **colour**，自定义颜色，默认为蓝色
     - **testing**，是否启用接口测试模块，默认值 false  
-    - 更多配置参考 ![amWiki - config.json 配置](http://amwiki.org/doc/?file=030-%E6%96%87%E6%A1%A3%E6%8A%80%E6%9C%AF%E7%AF%87/100-config%E9%85%8D%E7%BD%AE)
+    - 更多配置参考 [amWiki - config.json 配置](http://amwiki.org/doc/?file=030-%E6%96%87%E6%A1%A3%E6%8A%80%E6%9C%AF%E7%AF%87/100-config%E9%85%8D%E7%BD%AE)
     - 例如：
     ```javascript
     {
