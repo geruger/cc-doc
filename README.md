@@ -2,7 +2,7 @@
 
 ## 开始一个新文库的步骤
 
-1. ##### 下载 Github 出品的开源文本编辑器 [Visual Studio Code](https://code.visualstudio.com/Download)，并安装  
+1. ##### 下载 Microsoft 出品的开源文本编辑器 [Visual Studio Code](https://code.visualstudio.com/Download)，并安装  
 
 2. ##### 安装 VSCode 完成之后，再安装插件 `amWikiForVSCode`，您可以通过以下三种途径安装：
     - 【方式】：通过 VSCode `扩展`菜单，搜索 `amWikiForVSCode` 并安装
