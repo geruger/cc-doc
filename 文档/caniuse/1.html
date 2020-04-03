@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        body {
+            background: #f2e8d5;
+        }
+
+        ul,
+        li,
+        h4 {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .list {
+            float: left;
+            min-width: 50px;
+            max-width: 100px;
+            margin-right: 5px;
+        }
+
+        .list header {
+            height: 40px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        ul {
+            height: 202px;
+        }
+
+        li {
+            height: 32px;
+            color: #fff;
+            position: relative;
+            margin-bottom: 2px;
+            font-size: 14px;
+        }
+
+        li div {
+            padding: 5px 10px;
+            text-align: center;
+        }
+
+        li div:hover {
+            opacity: 0.8;
+            ;
+        }
+
+        li div:hover~.message {
+            display: block;
+        }
+
+        li .tag {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            padding: 0 2px;
+            height: 10px;
+            font-size: 12px;
+            line-height: 10px;
+            font-weight: normal;
+            background-color: #fff;
+            color: black;
+            text-shadow: none;
+        }
+
+        .message {
+            min-width: 200px;
+            padding: 15px 20px;
+            background: #899a00;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            border: 1px solid #333;
+            z-index: 1;
+            display: none;
+            text-align: left;
+        }
+
+        .n {
+            background: #ab2a18;
+        }
+
+        .y {
+            background: #39b54a;
+        }
+
+        .a {
+            background: #899a00;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="list" v-for="(val,index) in caniuse.agents">
+            <header>
+                {{index | browser}}
+            </header>
+            <ul>
+                <li v-for="(mess, type, i) in statsFilter(stats[index]).n" v-if="i>= Object.keys(statsFilter(stats[index]).n).length-2">
+                    <div class="n">
+                        {{type.slice(1)}}
+                        <span class="tag" v-if="getMessage(mess).length">*</span>
+                    </div>
+                    <div v-if="getMessage(mess).length" class="message">
+                        <h4>注意事项： </h4>
+                        <p v-for="(v,key,i) in notes_by_num" v-if="getMessage(mess).indexOf('#'+key)!=-1">{{i+1}}. {{v
+                            | messageSlice}}</p>
+                    </div>
+                </li>
+                <li v-for="(mess, type, i) in statsFilter(stats[index]).a" v-if="i<2">
+                    <div class="a">
+                        {{type.slice(1)}}
+                        <span class="tag" v-if="getMessage(mess).length">*</span>
+                    </div>
+                    <div v-if="getMessage(mess).length" class="message">
+                        <h4>注意事项： </h4>
+                        <p v-for="(v,key,i) in notes_by_num" v-if="getMessage(mess).indexOf('#'+key)!=-1">{{i+1}}. {{v
+                            | messageSlice}}</p>
+                    </div>
+                </li>
+                <li v-for="(mess, type, i) in statsFilter(stats[index]).y" v-if="i<2">
+                    <div class="y">
+                        {{type.slice(1)}}
+                        <span class="tag" v-if="getMessage(mess).length">*</span>
+                    </div>
+                    <div v-if="getMessage(mess).length" class="message">
+                        <h4>注意事项： </h4>
+                        <p v-for="(v,key,i) in notes_by_num" v-if="getMessage(mess).indexOf('#'+key)!=-1">{{i+1}}. {{v
+                            | messageSlice}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        /**
+        *  agents:  浏览器信息
+        *  data:  CSS兼容信息
+        *       stats: 具体设备  {}
+        *       categories: 所属分类 []
+        *       keywords: 样式关键字 ""
+        *       notes_by_num: 备注信息  {}
+        *        
+        *  ecmascript:  js兼容信息
+        */
+        new Vue({
+            el: "#app",
+            data: {
+                caniuse: caniuse,   // 全部数据
+                stats: {},   // 具体设备兼容性
+                categories: [],  // 所属分类
+                keywords: "",    // 样式关键字
+                notes_by_num: {},  // 备注信息
+            },
+            methods: {
+                statsFilter: function (data) {
+                    data = data || {}
+                    var newkey = (Object.keys(data)).sort(function (a, b) {
+                        return parseInt(a) - parseInt(b)
+                    });
+                    var newObj = {}; //创建一个新的对象，用于存放排好序的键值对
+                    for (var i = 0; i < newkey.length; i++) {//遍历newkey数组
+                        newObj['a' + newkey[i]] = data[newkey[i]];//向新创建的对象中按照排好的顺序依次增加键值对
+                    }
+                    var n = {}, a = {}, y = {};
+                    for (const key in newObj) {
+                        if (newObj.hasOwnProperty(key)) {
+                            const element = newObj[key];
+                            if (element.indexOf('a') != -1) {
+                                a[key] = element
+                            } else if (element.indexOf('n') != -1 || element.indexOf('p') != -1) {
+                                n[key] = element
+                            } else if (element.indexOf('y') != -1) {
+                                y[key] = element
+                            }
+                        }
+                    }
+                    return { n, a, y }
+                },
+                getMessage: function (d) {
+                    d = d.split(" ").filter(function (v, i) {
+                        return v.indexOf("#") != -1
+                    })
+                    return d
+                },
+            },
+            mounted: function () {
+                var query = location.search.replace("?", "").split("=")[1]
+                this.stats = caniuse.data[query].stats
+                this.notes_by_num = caniuse.data[query].notes_by_num
+            },
+            filters: {
+                browser: function (val) {
+                    switch (val) {
+                        case 'ie': return 'IE'; break;
+                        case 'edge': return 'Edge'; break;
+                        case 'firefox': return 'Firefox'; break;
+                        case 'chrome': return 'Chrome'; break;
+                        case 'safari': return 'Safari'; break;
+                        case 'opera': return 'Opera'; break;
+                        case 'ios_saf': return 'iOS Safari'; break;
+                        case 'op_mini': return 'Opera Mini'; break;
+                        case 'android': return 'Android Browser'; break;
+                        case 'bb': return 'Blackberry Browser'; break;
+                        case 'op_mob': return 'Opera Mobile'; break;
+                        case 'and_chr': return 'Chrome for Android'; break;
+                        case 'and_ff': return 'Firefox for Android'; break;
+                        case 'ie_mob': return 'IE Mobile'; break;
+                        case 'and_uc': return 'UC Browser for Android'; break;
+                        case 'samsung': return 'Samsung Internet'; break;
+                        case 'and_qq': return 'QQ Browser'; break;
+                        case 'baidu': return 'Baidu Browser'; break;
+                        default: return val; break;
+                    }
+                },
+                messageSlice: function (d) {
+                    d = d.slice(0, d.indexOf('(http'))
+                    return d
+                },
+            }
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>

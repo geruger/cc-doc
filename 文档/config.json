@@ -1,3 +1,7 @@
 {
-    "page-mounts": true
+    "name": "技术文库",
+    "ver": "",
+    "logo": "amWiki/images/logo1.png",
+    "page-mounts": true,
+    "github-url": "https://github.com/geruger/cc-doc"
   }
