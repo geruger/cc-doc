@@ -1,7 +1,6 @@
 # 技术文档
 
-文档访问地址： [https://geruger.github.io/cc-doc/](https://geruger.github.io/cc-doc/)
-
+文档访问地址： <a href="https://geruger.github.io/cc-doc/" target="_blank">https://geruger.github.io/cc-doc/</a>
 
 ## 开始一个新文库的步骤
 
