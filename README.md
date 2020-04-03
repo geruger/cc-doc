@@ -1,5 +1,8 @@
 # 技术文档
 
+文档访问地址： [https://geruger.github.io/cc-doc/](https://geruger.github.io/cc-doc/)
+
+
 ## 开始一个新文库的步骤
 
 1. ##### 下载 Microsoft 出品的开源文本编辑器 [Visual Studio Code](https://code.visualstudio.com/Download)，并安装  
